@@ -10,3 +10,5 @@ Function Invoke-Calculation{
     $scriptBlock = [ScriptBlock]::Create($ToCalc)
     Write-Output (Invoke-Command $scriptBlock)
 }
+
+Export-ModuleMember -Function Invoke-Calculation
