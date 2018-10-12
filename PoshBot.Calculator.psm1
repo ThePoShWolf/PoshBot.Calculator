@@ -4,7 +4,7 @@ Function Invoke-Calculation{
         CommandName = 'c'
     )]
     Param(
-        [ValidatePattern('^[0-9\+\-\*\/\(\)]*$')] #string should only have numbers and the following symbols: + - * /
+        [ValidatePattern('^[0-9\+\-\*\/\(\)]*$')] #string should only have numbers and the following symbols: + - * / ( )
         [string]$ToCalc
     )
     $scriptBlock = [ScriptBlock]::Create($ToCalc)
