@@ -37,11 +37,13 @@ Function Invoke-Calculation{
         }Else{ # Invalid usage of '^'
 
         }
-        While(($newstring[$y] -match '\d') -and ($y -lt $newstring.Length-1)){
+        While(($newstring[$y] -match '\d') -and ($y -lt $newstring.Length)){
             $y++
         }
         If($y -lt $newstring.Length){
             $ToCalc = ($newString[0..($y-1)] -join '') + ')' + ($newString[($y)..$newstring.length] -join '')
+        }Else{
+            $ToCalc = $newString + ')'
         }
     }
     $Scriptblock = [scriptblock]::Create($ToCalc)
