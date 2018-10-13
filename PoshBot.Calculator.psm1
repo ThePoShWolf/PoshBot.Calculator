@@ -3,13 +3,18 @@ Function Invoke-Calculation{
     [PoshBot.BotCommand(
         CommandName = 'c'
     )]
+    param(
+        [string]$ToCalc
+    )
     <#Param(
         [ValidatePattern('^[0-9\+\-\*\/\(\)\.]*$')] #string should only have numbers and the following symbols: + - * / ( ) .
         [string]$ToCalc
     )#>
     # If I do it this way with the $args variable, then I can accept () in the equation.
     # Otherwise it separates everything to different parameters, which breaks the function.
-    $ToCalc = $args -join ''
+    If($args){
+        $ToCalc = $ToCalc + ($args -join '')
+    }
     $regex = '[0-9\+\-\*\/\(\)\.\^]'
     $oppositeRegex = '[^0-9\+\-\*\/\(\)\.\^]'
     If($ToCalc -match $oppositeRegex){
@@ -36,7 +41,7 @@ Function Invoke-Calculation{
             $y++
         }
         If($y -lt $newstring.Length){
-            $ToCalc = ($newString[0..$y] -join '') + ')' + ($newString[($y+1)..$newstring.length] -join '')
+            $ToCalc = ($newString[0..($y-1)] -join '') + ')' + ($newString[($y)..$newstring.length] -join '')
         }
     }
     $Scriptblock = [scriptblock]::Create($ToCalc)
