@@ -23,6 +23,8 @@ Function Invoke-Calculation{
         $ToCalc = $ToCalc -replace $oppositeRegex, ''
     }
 
+    # Replacing ^ symbol with the [math]::pow() method
+    # so 8^4 becomes [math]::pow(8,4)
     While($ToCalc -match '\^'){
         $mathstring = '[math]::pow('
         $x = ($ToCalc.IndexOf('^') - 1)
@@ -35,7 +37,7 @@ Function Invoke-Calculation{
         }Elseif(($x -gt -1) -and ($x -lt $ToCalc.length-1)){
             $newString = ($ToCalc[0..$x] -join '') + $mathstring + ($ToCalc[($x+1)..$ToCalc.length] -join '').Replace('^',',')
         }Else{ # Invalid usage of '^'
-
+            Throw 'Invalid usage of "^"'
         }
         While(($newstring[$y] -match '\d') -and ($y -lt $newstring.Length)){
             $y++
